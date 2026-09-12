@@ -14,8 +14,15 @@ const startY = 400;
 const gravity = 0.4;
 
 let isDragging = false;
-let score = 0;
+let streak = 0;
+let bestStreak = 0;
 let scored = false;
+
+const scoreDisplay = document.getElementById("scoreDisplay");
+
+function updateScoreDisplay() {
+  scoreDisplay.textContent = `Streak: ${streak} | Best: ${bestStreak}`;
+}
 
 function drawHoop() {
   ctx.beginPath();
@@ -45,9 +52,12 @@ function checkScore() {
   const distance = Math.hypot(ball.x - hoopX, ball.y - hoopY);
 
   if (distance < 15 && ball.vy > 0 && !scored) {
-    score++;
+    streak++;
+    if (streak > bestStreak) {
+      bestStreak = streak;
+    }
     scored = true;
-    console.log("Score! Total:", score);
+    updateScoreDisplay();
   }
 }
 
@@ -60,6 +70,10 @@ function update() {
     checkScore();
 
     if (ball.y > canvas.height + 50) {
+      if (!scored) {
+        streak = 0;
+        updateScoreDisplay();
+      }
       resetBall();
       scored = false;
     }
