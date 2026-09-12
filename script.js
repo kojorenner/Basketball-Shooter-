@@ -14,6 +14,8 @@ const startY = 400;
 const gravity = 0.4;
 
 let isDragging = false;
+let score = 0;
+let scored = false;
 
 function drawHoop() {
   ctx.beginPath();
@@ -36,14 +38,30 @@ function drawBall() {
   ctx.stroke();
 }
 
+function checkScore() {
+  const hoopX = 250;
+  const hoopY = 100;
+
+  const distance = Math.hypot(ball.x - hoopX, ball.y - hoopY);
+
+  if (distance < 15 && ball.vy > 0 && !scored) {
+    score++;
+    scored = true;
+    console.log("Score! Total:", score);
+  }
+}
+
 function update() {
   if (ball.vx !== 0 || ball.vy !== 0) {
     ball.x += ball.vx;
     ball.y += ball.vy;
     ball.vy += gravity;
 
+    checkScore();
+
     if (ball.y > canvas.height + 50) {
       resetBall();
+      scored = false;
     }
   }
 }
@@ -86,4 +104,4 @@ canvas.addEventListener("mouseup", (e) => {
   ball.vy = (ball.y - mouseY) * 0.2;
 });
 
-gameLoop()
+gameLoop();
