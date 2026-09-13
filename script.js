@@ -17,6 +17,7 @@ let isDragging = false;
 let streak = 0;
 let bestStreak = 0;
 let scored = false;
+const swishSound = new Audio("https://actions.google.com/sounds/v1/sports/basketball_swish.ogg");
 
 const scoreDisplay = document.getElementById("scoreDisplay");
 
@@ -58,6 +59,7 @@ function checkScore() {
     }
     scored = true;
     updateScoreDisplay();
+    swishSound.play();
   }
 }
 
