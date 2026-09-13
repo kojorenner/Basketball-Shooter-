@@ -134,4 +134,12 @@ canvas.addEventListener("mouseup", (e) => {
   ball.vy = (ball.y - mouseY) * 0.2;
 });
 
+const resetButton = document.getElementById("resetButton");
+resetButton.addEventListener("click", () => {
+  streak = 0;
+  bestStreak = 0;
+  updateScoreDisplay();
+  resetBall();
+});
+
 gameLoop();
